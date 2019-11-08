@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from wiki.models import Page
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView
+from wiki.models import Page
 from wiki.forms import PageForm
 
 
@@ -43,10 +45,10 @@ class PageDetailView(DetailView):
 
     def get(self, request, slug):
         """ Returns a specific of wiki page by slug. """
-        context = {
-          'article': Page.objects.get(slug=slug)
-        }
-        return(render(request, 'page.html', context))
+        article = Page.objects.get(slug=slug)
+        form = PageForm(instance=article)
+
+        return(render(request, 'page.html', { 'article': article, 'form': form}))
 
     def post(self, request, slug):
-        pass
+        return(redirect(reverse('wiki-detail-page')))

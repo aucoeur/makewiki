@@ -2,9 +2,13 @@
 
 {% block content %}
 <br /><br /><br /><br />
-    {{ article.title }}<br />
-<br />
-    {{ article.author }}<br />
-<br /><br />
-    {{ article.content }}
+<h1>{{ article.title }}</h1>
+<small>Created By: {{ article.author }}</small>
+<div class="pt-4">
+    <p>{{ article.content }}</p>
+</div>
+<hr>
+<h3>Edit Article</h3>
+{% include 'page_edit_form.html' %}
+
 {% endblock %}
