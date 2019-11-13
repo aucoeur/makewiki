@@ -51,4 +51,11 @@ class PageDetailView(DetailView):
         return(render(request, 'page.html', { 'article': article, 'form': form}))
 
     def post(self, request, slug):
-        return(redirect(reverse('wiki-detail-page')))
+      #TODO: figure out what's wrong with the submit
+      if request.method == 'POST':
+        data = PageForm(request.POST)
+        if data.is_valid():
+          post = data.save(commit=False)
+          post.save()
+
+        return(redirect(reverse('wiki-detail-page'), {'form': post}))
